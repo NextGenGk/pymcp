@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "patient-data": {
+      "command": "python",
+      "args": [
+        "-m",
+        "uvicorn",
+        "server:app",
+        "--host",
+        "localhost",
+        "--port",
+        "8000"
+      ],
+      "cwd": "c:\\Users\\atkol\\OneDrive\\Desktop\\aurav1\\mcp-patient-data",
+      "env": {
+        "SUPABASE_URL": "https://rsnysvtjmelnojkubdqu.supabase.co",
+        "SUPABASE_SERVICE_ROLE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzbnlzdnRqbWVsbm9qa3ViZHF1Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTg2NDA0NCwiZXhwIjoyMDgxNDQwMDQ0fQ.WR1yCGjb9SvhAzAFwrMt8vcdjS6ojtWjbbokkSQPDfk"
+      }
+    }
+  }
+}

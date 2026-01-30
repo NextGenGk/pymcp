@@ -1,0 +1,74 @@
+{
+  "info": {
+    "_postman_id": "b4b84e8a-0496-47fd-9b1a-fe6f87870ef8",
+    "name": "Patient Data MCP Server",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["health"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Fetch Patient Data (Example)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"jsonrpc\": \"2.0\",\r\n  \"method\": \"tools/call\",\r\n  \"params\": {\r\n    \"name\": \"fetch_patient_data\",\r\n    \"arguments\": {\r\n      \"pid\": \"ebcdeaea-5853-4eee-aa2d-c94e2a93c6ff\",\r\n      \"include_prescriptions\": true,\r\n      \"include_appointments\": true\r\n    }\r\n  },\r\n  \"id\": 1\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": [""]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "List Tools",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"jsonrpc\": \"2.0\",\r\n  \"method\": \"tools/list\",\r\n  \"params\": {},\r\n  \"id\": 1\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": [""]
+        }
+      },
+      "response": []
+    }
+  ]
+}
