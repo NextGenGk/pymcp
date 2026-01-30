@@ -5,6 +5,7 @@ Provides fetch_patient_data tool to retrieve patient information from Supabase
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from typing import Optional, List, Dict, Any
 from supabase import create_client, Client
@@ -18,6 +19,14 @@ load_dotenv()
 
 # Initialize FastAPI app
 app = FastAPI(title="Patient Data MCP Server", version="1.0.0")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3001", "http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Initialize Supabase client
 SUPABASE_URL = os.getenv("SUPABASE_URL")
@@ -82,28 +91,14 @@ async def handle_mcp_request(request: MCPRequest):
                     "tools": [
                         {
                             "name": "fetch_patient_data",
-                            "description": "Fetch comprehensive patient data from Supabase including demographics, medical history, appointments, and prescriptions. This data can be used to generate new prescriptions.",
+                            "description": "Fetch comprehensive patient data from Supabase including demographics, medical history, appointments, and prescriptions.",
                             "inputSchema": {
                                 "type": "object",
                                 "properties": {
-                                    "pid": {
-                                        "type": "string",
-                                        "description": "Patient ID (UUID)"
-                                    },
-                                    "aid": {
-                                        "type": "string",
-                                        "description": "Appointment ID (UUID) - optional, if provided will fetch specific appointment details"
-                                    },
-                                    "include_prescriptions": {
-                                        "type": "boolean",
-                                        "description": "Include prescription history (default: true)",
-                                        "default": True
-                                    },
-                                    "include_appointments": {
-                                        "type": "boolean",
-                                        "description": "Include appointment history (default: true)",
-                                        "default": True
-                                    }
+                                    "pid": {"type": "string"},
+                                    "aid": {"type": "string"},
+                                    "include_prescriptions": {"type": "boolean"},
+                                    "include_appointments": {"type": "boolean"}
                                 },
                                 "required": ["pid"]
                             }
@@ -266,7 +261,12 @@ async def health_check():
     try:
         # Test Supabase connection
         supabase.table("patients").select("pid").limit(1).execute()
-        return {"status": "healthy", "supabase": "connected"}
+        
+        status = {
+            "status": "healthy", 
+            "supabase": "connected"
+        }
+        return status
     except Exception as e:
         return JSONResponse(
             status_code=503,
